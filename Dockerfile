@@ -1,3 +1,18 @@
-FROM httpd:2.4
+FROM python:3.7-slim-buster
 
-EXPOSE 80
+WORKDIR /app
+
+COPY . .
+
+RUN useradd -m sid && \
+    chown -R sid:sid /app
+
+USER sid
+
+ENV PATH="/home/sid/.local/bin:${PATH}"
+
+RUN pip install --user -r requirements/prod.txt
+
+EXPOSE 8000
+
+CMD ["gunicorn", "wsgi:application", "-c", "gunicorn.py"]
