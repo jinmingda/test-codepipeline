@@ -15,4 +15,4 @@ RUN pip install --user -r requirements/prod.txt
 
 EXPOSE 8000
 
-CMD ["gunicorn", "wsgi:application", "-w", "4", "-k", "gevent"]
+CMD ["gunicorn", "wsgi:application", "-wc", "gunicorn.py"]
