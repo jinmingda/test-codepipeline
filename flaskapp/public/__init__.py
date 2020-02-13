@@ -1,2 +1,2 @@
-"""The public module, including the homepage."""
+"""The public package."""
 from . import views  # noqa

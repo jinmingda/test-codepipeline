@@ -5,8 +5,5 @@ python:
 install:
   - pip install -r requirements/dev.txt
 before_script:
-  - export FLASK_ENV=development
-  - black --check --diff .
-  - flake8 .
-  - mypy --strict flaskapp/
-script: pytest -v
+  - flask lint
+script: flask test
