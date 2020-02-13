@@ -9,4 +9,4 @@ before_script:
   - black --check --diff .
   - flake8 .
   - mypy --strict flaskapp/
-script: pytest
+script: pytest -v
