@@ -9,6 +9,8 @@ RUN useradd -m sid && \
 
 USER sid
 
+ENV PATH="/home/sid/.local/bin:${PATH}"
+
 RUN pip install --user -r requirements/prod.txt
 
 EXPOSE 8000
