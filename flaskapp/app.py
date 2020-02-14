@@ -9,6 +9,18 @@ from sentry_sdk.integrations.flask import FlaskIntegration
 from flaskapp import commands, public
 
 
+def register_extensions(app: Flask) -> None:
+    """Register Flask plugins."""
+    # Initialize Sentry
+    if app.config.get("SENTRY_DSN"):
+        sentry_sdk.hub.init(
+            dsn=app.config.get("SENTRY_DSN"), integrations=[FlaskIntegration()],
+        )
+    else:
+        sentry_sdk.hub.init()
+    return None
+
+
 def register_blueprints(app: Flask) -> None:
     """Register Flask blueprints."""
     app.register_blueprint(public.views.blueprint)
@@ -45,15 +57,8 @@ def create_app(config: Optional[str] = None) -> Flask:
     else:
         app.config.from_object("flaskapp.settings.common")
 
+    register_extensions(app)
     register_blueprints(app)
     register_commands(app)
-
-    # Initialize Sentry
-    if app.config.get("SENTRY_DSN"):
-        sentry_sdk.hub.init(
-            dsn=app.config.get("SENTRY_DSN"), integrations=[FlaskIntegration()],
-        )
-    else:
-        sentry_sdk.hub.init()
 
     return app
