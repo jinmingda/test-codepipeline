@@ -1,2 +1,7 @@
 """The common settings, some expected to be overwritten by later settings."""
-SECRET_KEY = "a"
+from environs import Env
+
+env = Env()
+env.read_env()
+
+SECRET_KEY = env.str("SECRET_KEY", None)
