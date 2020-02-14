@@ -37,10 +37,11 @@ def create_app(config: Optional[str] = None) -> Flask:
     """
     app = Flask(__name__)
 
+    # Load configuration
     if config:
         app.config.from_object(config)
     elif "FLASK_SETTINGS_MODULE" in os.environ:
-        app.config.from_envvar("FLASK_SETTINGS_MODULE")  # TODO
+        app.config.from_object(os.environ["FLASK_SETTINGS_MODULE"])
     else:
         app.config.from_object("flaskapp.settings.common")
 

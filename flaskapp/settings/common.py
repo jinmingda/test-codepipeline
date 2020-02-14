@@ -5,5 +5,3 @@ env = Env()
 env.read_env()
 
 SECRET_KEY = env.str("SECRET_KEY", None)
-
-SENTRY_DSN = env.str("SENTRY_DSN", None)
