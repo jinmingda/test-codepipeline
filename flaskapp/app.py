@@ -2,7 +2,9 @@
 import os
 from typing import Optional
 
+import sentry_sdk
 from flask import Flask
+from sentry_sdk.integrations.flask import FlaskIntegration
 
 from flaskapp import commands, public
 
@@ -35,16 +37,22 @@ def create_app(config: Optional[str] = None) -> Flask:
     """
     app = Flask(__name__)
 
-    # load default configuration
-    app.config.from_object("flaskapp.settings.common")
-    # load configuration from envvar
-    if "FLASK_SETTINGS_MODULE" in os.environ:
-        app.config.from_envvar("FLASK_SETTINGS_MODULE")
-    # load app specified configuration
     if config:
         app.config.from_object(config)
+    elif "FLASK_SETTINGS_MODULE" in os.environ:
+        app.config.from_envvar("FLASK_SETTINGS_MODULE")  # TODO
+    else:
+        app.config.from_object("flaskapp.settings.common")
 
     register_blueprints(app)
     register_commands(app)
+
+    # Initialize Sentry
+    if app.config.get("SENTRY_DSN"):
+        sentry_sdk.hub.init(
+            dsn=app.config.get("SENTRY_DSN"), integrations=[FlaskIntegration()],
+        )
+    else:
+        sentry_sdk.hub.init()
 
     return app

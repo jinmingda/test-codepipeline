@@ -2,6 +2,9 @@
 Flask==1.1.1
 click>=7.0
 
+# Sentry
+sentry-sdk[flask]===0.14.1
+
 # Deployment
 gevent==1.4.0
 gunicorn>=19.9.0
