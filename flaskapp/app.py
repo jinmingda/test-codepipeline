@@ -16,8 +16,6 @@ def register_extensions(app: Flask) -> None:
         sentry_sdk.hub.init(
             dsn=app.config.get("SENTRY_DSN"), integrations=[FlaskIntegration()],
         )
-    else:
-        sentry_sdk.hub.init()
     return None
 
 
