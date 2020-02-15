@@ -2,7 +2,6 @@
 from .common import env
 from .common import *  # noqa
 
-# When the envvar for storing the Sentry DSN is set to SENTRY_DSN, 'flask shell' will
-# send messages to Sentry whether or not the DSN is loaded into the app config. Not
-# sure why, but not using SENTRY_DSN as envvar seems to help.
+# Don't store the DSN envvar as SENTRY_DSN because it'll be sliently loaded by the SDK.
+# https://github.com/getsentry/sentry-python/blob/master/sentry_sdk/client.py#L56
 SENTRY_DSN = env.str("SENTRYDSN", None)
