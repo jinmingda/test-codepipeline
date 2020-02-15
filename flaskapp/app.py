@@ -1,6 +1,6 @@
 """The app module, containing the app factory function."""
 import os
-from typing import Optional
+from typing import Any, Dict, Optional
 
 import sentry_sdk
 from flask import Flask
@@ -25,6 +25,16 @@ def register_blueprints(app: Flask) -> None:
     """Register Flask blueprints."""
     app.register_blueprint(public.views.blueprint)
     return None
+
+
+def register_shellcontext(app: Flask) -> None:
+    """Register shell context objects."""
+
+    def shell_context() -> Dict[str, Any]:
+        """Shell context objects."""
+        return {}
+
+    app.shell_context_processor(shell_context)
 
 
 def register_commands(app: Flask) -> None:
@@ -59,6 +69,7 @@ def create_app(config: Optional[str] = None) -> Flask:
 
     register_extensions(app)
     register_blueprints(app)
+    register_shellcontext(app)
     register_commands(app)
 
     return app
