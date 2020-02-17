@@ -12,3 +12,5 @@ flake8-isort==2.8.0
 pep8-naming==0.9.1
 isort==4.3.21
 mypy==0.761
+
+invoke==1.4.1

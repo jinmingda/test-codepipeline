@@ -5,5 +5,5 @@ python:
 install:
   - pip install -r requirements/dev.txt
 before_script:
-  - flask lint
-script: flask test
+  - invoke lint
+script: invoke test
