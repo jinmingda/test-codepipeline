@@ -6,7 +6,7 @@ import sentry_sdk
 from flask import Flask
 from sentry_sdk.integrations.flask import FlaskIntegration
 
-from flaskapp import commands, public
+from flaskapp import public
 
 
 def register_extensions(app: Flask) -> None:
@@ -35,13 +35,6 @@ def register_shellcontext(app: Flask) -> None:
     app.shell_context_processor(shell_context)
 
 
-def register_commands(app: Flask) -> None:
-    """Register Click commands."""
-    app.cli.add_command(commands.test)
-    app.cli.add_command(commands.lint)
-    return None
-
-
 def create_app(config: Optional[str] = None) -> Flask:
     """Create a Flask application using the app factory pattern.
 
@@ -68,6 +61,5 @@ def create_app(config: Optional[str] = None) -> Flask:
     register_extensions(app)
     register_blueprints(app)
     register_shellcontext(app)
-    register_commands(app)
 
     return app
