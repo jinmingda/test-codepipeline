@@ -1,6 +1,7 @@
 -r prod.txt
 
 pytest==5.3.5
+pytest-cov==2.8.1
 WebTest==2.0.33
 
 black==19.10b0
