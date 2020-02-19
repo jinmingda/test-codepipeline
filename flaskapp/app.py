@@ -6,7 +6,7 @@ import sentry_sdk
 from flask import Flask
 from sentry_sdk.integrations.flask import FlaskIntegration
 
-from flaskapp import public
+from flaskapp import database, public
 
 
 def register_extensions(app: Flask) -> None:
@@ -16,6 +16,8 @@ def register_extensions(app: Flask) -> None:
         sentry_sdk.hub.init(
             dsn=app.config.get("SENTRY_DSN"), integrations=[FlaskIntegration()],
         )
+    # Initialize database
+    database.init_app(app)
     return None
 
 
@@ -30,7 +32,7 @@ def register_shellcontext(app: Flask) -> None:
 
     def shell_context() -> Dict[str, Any]:
         """Shell context objects."""
-        return {}
+        return {"metadata": database.metadata}
 
     app.shell_context_processor(shell_context)
 
