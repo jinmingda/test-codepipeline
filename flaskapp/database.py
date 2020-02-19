@@ -18,6 +18,6 @@ def init_app(app: Flask) -> None:
     return None
 
 
-def session_factory() -> Session:
-    """Create a database session."""
+def create_session() -> Session:
+    """Create a database session using factory pattern."""
     return sessionmaker(bind=metadata.bind)
